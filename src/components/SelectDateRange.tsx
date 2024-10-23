@@ -24,15 +24,15 @@ export function SelectDateRange({ options }: { options: string[] }) {
   }
 
   return (
-    <div>
-      <div>
+    <div className="flex justify-end">
+      <div className="flex items-center space-x-2 font-semibold">
         <label htmlFor="date">Data:</label>
         <select
           name="date"
           id="date"
           defaultValue={defaultOption}
           onChange={(e) => onChange(e.target.value)}
-          className="bg-zinc-800"
+          className="rounded-lg border bg-zinc-100 p-2 text-sm"
         >
           {options.map((option) => (
             <option key={option}>{option}</option>

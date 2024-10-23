@@ -3,22 +3,22 @@ import Link from 'next/link'
 
 export function Table({ tasks }: { tasks: Task[] | null }) {
   return (
-    <div className="container mx-auto p-4">
+    <div>
       <h1 className="mb-4 text-2xl font-bold">Lista de Tarefas</h1>
-      <table className="min-w-full border border-zinc-800 bg-white">
+      <table className="min-w-full border border-zinc-200 shadow-md">
         <thead>
-          <tr className="bg-zinc-700">
+          <tr className="bg-zinc-100">
             <th className="border-b px-4 py-2">Nome</th>
             <th className="border-b px-4 py-2">Status</th>
             <th className="border-b px-4 py-2">Data de Criação</th>
             <th className="border-b px-4 py-2">Workspace</th>
-            <th className="border-b px-4 py-2">Link</th>
+            <th className="border-b px-4 py-2">Ações</th>
           </tr>
         </thead>
-        <tbody className="bg-zinc-900/90">
+        <tbody className="bg-zinc-50">
           {tasks && tasks.length > 0 ? (
             tasks.map((task) => (
-              <tr key={task.gid} className="hover:bg-zinc-900">
+              <tr key={task.gid} className="hover:bg-zinc-200/50">
                 <td className="border-b px-4 py-2">{task.name}</td>
                 <td className="border-b px-4 py-2">{task.assignee_status}</td>
                 <td className="border-b px-4 py-2">
@@ -27,9 +27,7 @@ export function Table({ tasks }: { tasks: Task[] | null }) {
                 <td className="border-b px-4 py-2">{task.workspace.name}</td>
                 <td className="border-b px-4 py-2">
                   <Link
-                    href={task.permalink_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`/task?id=${task.gid}`}
                     className="text-blue-500 hover:underline"
                   >
                     Abrir
