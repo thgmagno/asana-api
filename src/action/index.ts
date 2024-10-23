@@ -13,10 +13,10 @@ export async function synchronize() {
     const response = await axios.get(env.API_URL)
     const { data }: { data: Task[] } = JSON.parse(response.data)
 
-    const sixHours = 6 * 60 * 60
+    const twelveHours = 12 * 60 * 60
 
     await Promise.all([
-      kv.set('asana-api-sync', { ttl: sixHours }),
+      kv.set('asana-api-sync', { ttl: twelveHours }),
       populateDatabase(data),
     ])
   }
@@ -24,8 +24,13 @@ export async function synchronize() {
   return null
 }
 
-export async function getData(key: string) {
-  const data: Task[] | null = await kv.get(`asana-api-${key}`)
+export async function getData(key?: string) {
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear()
+  const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0')
+  const defaultKey = `${currentYear}-${currentMonth}`
+
+  const data: Task[] | null = await kv.get(`asana-api-${key ?? defaultKey}`)
   return data
 }
 
